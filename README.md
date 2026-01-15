@@ -1,4 +1,4 @@
-# AI Tools Chatbot
+# LM Studio AI Agent
 
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-green" alt="Status" />
@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Powered%20By-LM%20Studio-orange" alt="LM Studio" />
 </div>
 
-A modern, responsive, and engaging chat interface designed for **LM Studio**. This web application connects to your local LLMs (Large Language Models) to provide a seamless chat experience with support for **markdown rendering**, **code highlighting**, **tables**, and **image generation**.
+A modern, responsive, and engaging chat interface designed for **LM Studio**. This web application connects to your local LLMs (Large Language Models) to provide a seamless chat experience with support for **markdown rendering**, **code highlighting**, and **tables**.
 
 ## ✨ Features
 
@@ -39,8 +39,8 @@ A modern, responsive, and engaging chat interface designed for **LM Studio**. Th
 1.  **Clone the repository**:
 
     ```bash
-    git clone <repository-url>
-    cd lm-test
+    git clone https://github.com/Sundareeshwaran/lm-studio-chat-agent.git
+    cd lm-studio-chat-agent
     ```
 
 2.  **Install Dependencies**:
@@ -84,7 +84,7 @@ src/
 ├── components/
 │   ├── Sidebar.jsx       # Side navigation & history
 │   ├── ChatMessages.jsx  # Message list & rendering
-│   └── ChatInput.jsx     # Input area with image toggle
+│   └── ChatInput.jsx     # Input area
 ├── hooks/
 │   └── useLMStudio.js    # Hook for LM Studio connection
 ├── App.jsx               # Main application layout
