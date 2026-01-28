@@ -23,6 +23,8 @@ export const Sidebar = memo(
     baseUrl,
     setBaseUrl,
     checkConnection,
+    selectedModel,
+    setSelectedModel,
   }) {
     const [showSettings, setShowSettings] = useState(false);
     const [tempUrl, setTempUrl] = useState(baseUrl);
@@ -113,30 +115,45 @@ export const Sidebar = memo(
               Status
             </div>
             <div
-              className={`flex items-center gap-2 p-2 rounded-md mb-2 ${
+              className={`flex flex-col gap-2 p-3 rounded-lg border ${
                 isConnected
-                  ? "bg-green-500/10 text-green-400"
-                  : "bg-red-500/10 text-red-400"
+                  ? "bg-green-500/5 border-green-500/20"
+                  : "bg-red-500/5 border-red-500/20"
               }`}
             >
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  isConnected ? "bg-green-500" : "bg-red-500"
-                }`}
-              />
-              <div className="flex flex-col overflow-hidden">
-                <span className="text-sm font-medium leading-tight">
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    isConnected ? "bg-green-500" : "bg-red-500"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    isConnected ? "text-green-400" : "text-red-400"
+                  }`}
+                >
                   {isConnected ? "Connected" : "Disconnected"}
                 </span>
-                {isConnected && models.length > 0 && (
-                  <span
-                    className="text-[10px] text-gray-500 truncate"
-                    title={models[0].path}
-                  >
-                    {models[0].path.split("/").pop()}
-                  </span>
-                )}
               </div>
+
+              {isConnected && models.length > 0 && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
+                    Model
+                  </span>
+                  <select
+                    value={selectedModel || ""}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    className="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1.5 text-xs text-gray-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                  >
+                    {models.map((model) => (
+                      <option key={model.path} value={model.path}>
+                        {model.path.split("/").pop()}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
 
             <button
@@ -187,7 +204,8 @@ export const Sidebar = memo(
       prevProps.isSidebarOpen !== nextProps.isSidebarOpen ||
       prevProps.currentSessionId !== nextProps.currentSessionId ||
       prevProps.baseUrl !== nextProps.baseUrl ||
-      prevProps.models !== nextProps.models
+      prevProps.models !== nextProps.models ||
+      prevProps.selectedModel !== nextProps.selectedModel
     ) {
       return false;
     }
@@ -205,5 +223,5 @@ export const Sidebar = memo(
     }
 
     return true;
-  }
+  },
 );
