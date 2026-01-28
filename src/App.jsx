@@ -32,6 +32,8 @@ const App = () => {
     setBaseUrl,
     stop,
     client,
+    selectedModel,
+    setSelectedModel,
   } = useLMStudio();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -66,7 +68,7 @@ const App = () => {
   });
 
   const [currentSessionId, setCurrentSessionId] = useState(
-    () => sessions[0]?.id
+    () => sessions[0]?.id,
   );
   const [input, setInput] = useState("");
 
@@ -153,7 +155,7 @@ const App = () => {
           const title = result.content.trim().replace(/^["']|["']$/g, "");
           if (title) {
             setSessions((prev) =>
-              prev.map((s) => (s.id === sessionId ? { ...s, title } : s))
+              prev.map((s) => (s.id === sessionId ? { ...s, title } : s)),
             );
           }
         })
@@ -201,7 +203,7 @@ const App = () => {
 
           const nextChunk = fullResponse.slice(
             displayedResponse.length,
-            displayedResponse.length + chunkLength
+            displayedResponse.length + chunkLength,
           );
 
           displayedResponse += nextChunk;
@@ -260,6 +262,8 @@ const App = () => {
         baseUrl={baseUrl}
         setBaseUrl={setBaseUrl}
         checkConnection={checkConnection}
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
       />
 
       {/* Main Chat Area */}

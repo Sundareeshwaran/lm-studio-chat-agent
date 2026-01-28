@@ -15,6 +15,7 @@ export function useLMStudio() {
     return `ws://${window.location.hostname}:1234`;
   });
 
+  const [selectedModel, setSelectedModel] = useState(null);
   const [client, setClient] = useState(null);
   const [models, setModels] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -31,17 +32,28 @@ export function useLMStudio() {
     try {
       // Basic connectivity check: list models
       const fetchedModels = await client.system.listDownloadedModels();
+
       setModels(fetchedModels);
+      // Default to first model if none selected or current selection not available
+      if (fetchedModels.length > 0) {
+        if (
+          !selectedModel ||
+          !fetchedModels.find((m) => m.path === selectedModel)
+        ) {
+          setSelectedModel(fetchedModels[0].path);
+        }
+      }
+
       setIsConnected(true);
       setError(null);
     } catch (err) {
       console.error("LM Studio connection error:", err);
       setIsConnected(false);
       setError(
-        `Could not connect to ${baseUrl}. Check IP and ensure server is running.`
+        `Could not connect to ${baseUrl}. Check IP and ensure server is running.`,
       );
     }
-  }, [client, baseUrl]);
+  }, [client, baseUrl, selectedModel]);
 
   // Initialize client when baseUrl changes
   useEffect(() => {
@@ -78,12 +90,12 @@ export function useLMStudio() {
     setIsLoading(true);
     setError(null);
     try {
-      // Find a loaded model or just use any available for now
-      const modelPath = models[0]?.path;
+      // Use selected model or fallback to first available
+      const modelPath = selectedModel || models[0]?.path;
 
       if (!modelPath) {
         throw new Error(
-          "No models found. Please download a model in LM Studio."
+          "No models found. Please download a model in LM Studio.",
         );
       }
 
@@ -125,5 +137,7 @@ export function useLMStudio() {
     setBaseUrl,
     stop,
     client,
+    selectedModel,
+    setSelectedModel,
   };
 }
