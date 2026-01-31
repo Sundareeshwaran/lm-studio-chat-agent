@@ -62,6 +62,25 @@ A modern, responsive, and engaging chat interface designed for **LM Studio**. Th
 4.  **Open in Browser**:
     Navigate to `http://localhost:5173` (or the URL shown in your terminal).
 
+### 🐳 Running with Docker
+
+You can also run the application in a Docker container.
+
+1.  **Build the Docker Image**:
+
+    ```bash
+    docker build -t lm-studio-chat-agent .
+    ```
+
+2.  **Run the Container**:
+
+    ```bash
+    docker run -p 3000:3000 lm-studio-chat-agent
+    ```
+
+3.  **Access the App**:
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
 ## 💡 How to Use
 
 1.  **Chatting**: Type your query in the input box and hit Enter or click Send.
